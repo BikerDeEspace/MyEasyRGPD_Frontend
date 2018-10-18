@@ -7,12 +7,14 @@ services:
             dockerfile: Dockerfile
             args:
             - CLIENTID=<CLIENT_ID>
-            - CLIENTSECRET=<CLIENT_SECRET> 
+            - CLIENTSECRET=<CLIENT_SECRET>
             - BACKENDURL=<BACKEND_URL>
         environment:
-            - VIRTUAL_HOST=<VIRTUAL_HOST>
-            - LETSENCRYPT_HOST=<LETSENCRYPT_HOST>
-            - LETSENCRYPT_EMAIL=<LETSENCRYPT_EMAIL>
+            - VIRTUAL_HOST=${VIRTUAL_HOST}
+            - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
+            - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+        env_file:
+        - .env
         networks: 
         - front-easyrgpd.network
 
@@ -20,6 +22,7 @@ services:
     nginx-proxy:
         image: jwilder/nginx-proxy
         ports:
+            #BACKEND port 343
             - "343:80"
             - "443:443"
         volumes:
