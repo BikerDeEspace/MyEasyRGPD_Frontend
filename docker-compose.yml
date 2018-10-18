@@ -23,7 +23,7 @@ services:
         image: jwilder/nginx-proxy
         ports:
             #BACKEND port 343
-            - "343:80"
+            - "343:343"
             - "443:443"
         volumes:
             - "/srv/docker/nginx/certs:/etc/nginx/certs:ro"

@@ -48,8 +48,8 @@ FROM nginx:1.13.9-alpine
 # copy artifact build from the 'build environment'
 COPY --from=builder /usr/share/pialab/dist /usr/share/nginx/html
 
-# EXPOSE PORT 80
-EXPOSE 80
+# EXPOSE PORT 343
+EXPOSE 343
 
 # START SERVER
 CMD ["nginx", "-g", "daemon off;"]
