@@ -6,9 +6,9 @@ services:
             context: ./app
             dockerfile: Dockerfile
             args:
-            - CLIENTID=1234
-            - CLIENTSECRET=987654321 
-            - BACKENDURL=<BACKENDURL>
+            - CLIENTID=<CLIENT_ID>
+            - CLIENTSECRET=<CLIENT_SECRET> 
+            - BACKENDURL=<BACKEND_URL>
         environment:
             - VIRTUAL_HOST=<VIRTUAL_HOST>
             - LETSENCRYPT_HOST=<LETSENCRYPT_HOST>
