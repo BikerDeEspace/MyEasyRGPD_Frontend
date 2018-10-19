@@ -13,10 +13,10 @@ services:
             VIRTUAL_HOST: ${VIRTUAL_HOST}
             LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+        ports: 
+            - ${HOST_PORTS}:80
         env_file:
         - .env
-        ports: 
-            - "<HOST_PORTS>:80"
 
 #CONTAINERS NETWORK
 networks:
