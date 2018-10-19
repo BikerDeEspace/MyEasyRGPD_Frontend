@@ -49,7 +49,7 @@ FROM nginx:1.13.9-alpine
 COPY --from=builder /usr/share/pialab/dist /usr/share/nginx/html
 
 # EXPOSE PORT 343
-EXPOSE 343
+EXPOSE 80
 
 # START SERVER
 CMD ["nginx", "-g", "daemon off;"]
