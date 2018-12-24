@@ -4,7 +4,7 @@ import { HomePage } from './page/home.po';
 import './set-env';
 
 
-describe('PIA Login page', () => {
+describe('MyEasyRGPD Login page', () => {
 
   const auth = {
     username: process.env.TEST_USERNAME,
