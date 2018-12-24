@@ -47,5 +47,3 @@ Thumbs.db
 # Docker files
 docker-compose.yml
 Dockerfile
-
-.env

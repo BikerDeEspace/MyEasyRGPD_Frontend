@@ -1,12 +1,9 @@
 @import "../../assets/stylesheets/variables";
-
 section {
   height: 700px;
   width: 700px;
-  border: 2px solid $pia-dark-black;
+  border: 2px solid black;
 }
-
-
 
 // New PIA
 .pia-newBlock {
@@ -52,7 +49,7 @@ section {
   }
   &-hint {
     position: absolute;
-    background-color: $pia-full-white;
+    background-color: #fff;
     width: 300px;
     height: 200px;
     box-shadow: 0px 0px 18px 2px rgba(212, 212, 212, 1);
@@ -99,11 +96,11 @@ section {
       &:focus {
         background: $pia-green;
         border-color: $pia-green;
-        color: $pia-full-white;
+        color: #fff;
       }
       &:active {
         color: $pia-green;
-        background-color: $pia-full-white;
+        background-color: #fff;
         border-color: $pia-green;
       }
     }
@@ -112,7 +109,7 @@ section {
       margin-left: 12px;
       &-list {
         z-index: 998;
-        background-color: darken($pia-white, 2.8%);
+        background-color: #eee;
         display: none;
         padding: 30px 10px 10px 10px;
         position: absolute;
@@ -141,13 +138,13 @@ section {
             font-weight: 500;
             display: block;
             text-decoration: none;
-            color: $pia-dark-black;
+            color: #000;
             &:focus,
             &:hover,
             &:active,
             .active {
               background-color: $pia-green;
-              color: $pia-full-white !important;
+              color: #ffffff !important;
               cursor: pointer;
             }
             &:disabled {
@@ -183,7 +180,7 @@ section {
       }
       &:hover {
         .pia-filtersBlock-filters-btn {
-          color: $pia-full-white;
+          color: #fff;
           background-color: $pia-green;
           .pia-icon-scroll-green {
             background-position: -367px -39px;
@@ -191,12 +188,12 @@ section {
         }
         .pia-filtersBlock-filters-list {
           display: block;
-          background-color: $pia-full-white;
+          background-color: #fff;
           ul {
             li {
               &.divider {
                 height: 1px;
-                background: darken($pia-white, 9.5%);
+                background: #ddd;
                 padding: 0;
                 margin: 4px 0;
               }
@@ -216,7 +213,7 @@ section {
       position: relative;
       display: inline-block;
       vertical-align: middle;
-      background-color: $pia-full-white;
+      background-color: #fff;
       //border-radius: 10px;
       padding: 3px 24px 5px 26px;
       margin-left: 10px;
@@ -295,7 +292,7 @@ section {
   width: 100%;
   max-width: 100%;
   margin-bottom: 1rem;
-  border-bottom: 1px solid darken($pia-white, 14.5%);
+  border-bottom: 1px solid #d0d0d0;
   thead {
     background-color: $pia-dark-black;
     color: $pia-white;
@@ -377,7 +374,7 @@ section {
   margin-right: 12px;
   margin-bottom: 40px;
   height: 382px;
-  border: 1px solid $pia-gray;
+  border: 1px solid #a7a7a7;
   padding: 9px;
   background-color: transparent; //background: url("../../../assets/images/pia-bg.png") repeat center center;
   .folder-icon {
@@ -393,7 +390,7 @@ section {
     width: 100%;
     text-align: center;
     font-size: 1.9rem;
-    color: $pia-green;
+    color: #2bbbad;
     background: transparent;
     border: 0;
   }
@@ -408,7 +405,7 @@ section {
     bottom: 3px;
     left: 9px;
     right: 9px;
-    border-top: 1px solid $pia-green;
+    border-top: 1px solid #2bbbad;
     padding-top: 21px;
     margin-top: 21px;
     text-align: center;
@@ -440,7 +437,7 @@ section {
     }
     &:focus,
     &:active {
-      background-color: $pia-full-white;
+      background-color: #fff;
     }
   }
   &:last-child {
@@ -471,7 +468,7 @@ section {
       left: 2px;
       font-size: 1rem;
       color: $pia-gray-dark;
-      background-color: $pia-full-white;
+      background-color: #fff;
       text-align: center;
       min-width: 100px;
       margin: 10px 0;
@@ -499,23 +496,9 @@ section {
 }
 
 .pia-filtersBlock {
-  margin: 8px 0 5px 0px;
+  margin: 8px 0 5px 10px;
 }
 
 .cardsContainer {
   margin-top: 3em;
-}
-
-.structure-info-button {
-  color: $pia-green;
-  float:right;
-  &>span {
-    display:none;
-  }
-  &:hover {
-    color: $pia-full-white;
-    &>span {
-      display: inline;
-    }
-  }
 }

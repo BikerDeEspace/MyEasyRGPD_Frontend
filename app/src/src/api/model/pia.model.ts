@@ -1,12 +1,11 @@
 
-import { BaseModel } from './base.model';
-import { Folder } from './folder.model';
-import { Processing } from './processing.model';
-
+import { BaseModel } from '@api/model/base.model'
+import { FolderModel } from '@api/models';
 
 export class Pia extends BaseModel {
   public id: any;
   public status = 0; // 0: doing, 1: refused, 2: simple_validation, 3: signed_validation, 4: archived
+  public name: string;
   public author_name: string;
   public evaluator_name: string;
   public validator_name: string;
@@ -17,14 +16,13 @@ export class Pia extends BaseModel {
   public concerned_people_searched_opinion: boolean = false; // 0 : false, 1: true
   public concerned_people_searched_content: string;
   public rejected_reason: string;
-  public applied_adjustments: string;
+  public applied_adjustements: string;
   public dpos_names: string;
   public people_names: string;
   public progress: number;
   public is_example: boolean = false;
-  public folder: Folder;
+  public folder: FolderModel;
   public type: string = PiaType.regular;
-  public processing: Processing;
 
   public numberOfQuestions = 36; // TODO Auto compute questions number
 
@@ -37,7 +35,7 @@ export class Pia extends BaseModel {
   }
 
   public validationIsCompleted(): boolean {
-    return [
+    return  [
       PiaStatus.SimpleValidation,
       PiaStatus.SignedValidation,
       PiaStatus.Archived

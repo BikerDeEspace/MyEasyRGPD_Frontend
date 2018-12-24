@@ -1,10 +1,10 @@
-import { browser } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { LoginPage } from './page/login.po';
-import { Header } from './element/header.po';
+import { HomePage } from './page/home.po';
 import './set-env';
 
 
-describe('MyEasyRGPD Login page', () => {
+describe('PIA Login page', () => {
 
   const auth = {
     username: process.env.TEST_USERNAME,
@@ -12,11 +12,11 @@ describe('MyEasyRGPD Login page', () => {
   };
 
   let loginPage: LoginPage;
-  let header: Header;
+  let homePage: HomePage;
 
   beforeEach(() => {
     loginPage = new LoginPage();
-    header = new Header();
+    homePage = new HomePage();
   });
 
   it('when user trying to login with wrong credentials he should stay on “login” page and see error notification', () => {
@@ -34,7 +34,7 @@ describe('MyEasyRGPD Login page', () => {
 
   });
 
-  it('when login is successful — he should be redirected to home page', () => {
+  it('when login is successful — he should redirect to home page', () => {
 
     loginPage.navigateTo();
     loginPage.clearSessionAndStorage();
@@ -44,12 +44,13 @@ describe('MyEasyRGPD Login page', () => {
 
     browser.wait(function() {
       return browser.getCurrentUrl().then(function(url) {
-        return /dashboard/.test(url);
+        return /home/.test(url);
       });
     }, 10000);
 
-    expect(header.navbarProfile().isPresent()).toBeTruthy();
-    header.clickOnLogoutInProfileMenu();
+    expect(homePage.navbarProfile().isPresent()).toBeTruthy();
+    homePage.clickOnLogoutInProfileMenu();
+    
   });
 
 });

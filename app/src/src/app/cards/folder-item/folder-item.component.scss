@@ -11,7 +11,7 @@
   height: 384px;
   border: none;
   padding: 9px;
-  background-color: $pia-full-white;
+  background-color: #fff;
   //background: url("../../../assets/images/pia-bg.png") repeat center center;
   -webkit-box-shadow: 1px 1px 2px 1px rgba(204,202,204,1);
     -moz-box-shadow: 1px 1px 2px 1px rgba(204,202,204,1);
@@ -32,12 +32,12 @@
     width: 100%;
     text-align: center;
     font-size: 1.9rem;
-    color: $pia-green;
+    color: #2BBBAD;
     background: transparent;
     border: 0;
 
     &:hover {
-      outline: 1px dotted $pia-green;
+      outline: 1px dotted #3EE095;
       cursor: text;
     }
   }
@@ -47,7 +47,7 @@
     bottom: 3px;
     left: 9px;
     right: 9px;
-    border-top: 1px solid $pia-green;
+    border-top: 1px solid #2BBBAD;
     padding-top: 21px;
     margin-top: 21px;
     text-align: center;
@@ -57,9 +57,5 @@
       text-decoration: none;
       padding: 5.5px 21px;
     }
-  }
-
-  .pia-dropdown-icon {
-    top: -0.6em;
   }
 }

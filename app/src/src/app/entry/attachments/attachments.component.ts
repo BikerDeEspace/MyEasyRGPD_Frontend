@@ -2,7 +2,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { AttachmentsService } from './attachments.service';
+import { AttachmentsService } from 'app/entry/attachments/attachments.service';
 import { PiaModel } from '@api/models';
 
 @Component({
@@ -24,7 +24,7 @@ export class AttachmentsComponent implements OnInit {
       attachment_file: new FormControl('', [])
     });
     this._attachmentsService.pia = this.pia;
-    //this._attachmentsService.listAttachments();
+    this._attachmentsService.listAttachments();
     this.dispplayAttachmentButton = (this.pia.status !== 2 && this.pia.status !== 3);
   }
 

@@ -1,0 +1,65 @@
+@import '../../../assets/stylesheets/variables';
+
+.pia-folder-item {
+  width: 276px;
+  display: inline-block;
+  color: $pia-green;
+  vertical-align: top;
+  position: relative;
+  margin-right: 12px;
+  margin-bottom: 40px;
+  height: 384px;
+  border: none;
+  padding: 9px;
+  background-color: $pia-full-white;
+  //background: url("../../../assets/images/pia-bg.png") repeat center center;
+  -webkit-box-shadow: 1px 1px 2px 1px rgba(204,202,204,1);
+    -moz-box-shadow: 1px 1px 2px 1px rgba(204,202,204,1);
+    box-shadow: 1px 1px 2px 1px rgba(204,202,204,1);
+
+  .folder-icon {
+    width: 100%;
+    text-align: center;
+    margin-top: 100px;
+    cursor: pointer;
+
+    .fa {
+      font-size: 7rem;
+    }
+  }
+
+  input.folder-title {
+    width: 100%;
+    text-align: center;
+    font-size: 1.9rem;
+    color: $pia-green;
+    background: transparent;
+    border: 0;
+
+    &:hover {
+      outline: 1px dotted $pia-green;
+      cursor: text;
+    }
+  }
+
+  .bottom-actions {
+    position: absolute;
+    bottom: 3px;
+    left: 9px;
+    right: 9px;
+    border-top: 1px solid $pia-green;
+    padding-top: 21px;
+    margin-top: 21px;
+    text-align: center;
+    margin-bottom: 9px;
+
+    a {
+      text-decoration: none;
+      padding: 5.5px 21px;
+    }
+  }
+
+  .pia-dropdown-icon {
+    top: -0.6em;
+  }
+}

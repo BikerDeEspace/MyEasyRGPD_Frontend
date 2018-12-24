@@ -1,6 +1,0 @@
-@import "../../assets/stylesheets/variables";
-@media (max-width: calc(#{map-get($breakpoints, 'medium')} - 1px)) {
-  .pia-rightSidebarBlock {
-    display:none;
-  }
-}
