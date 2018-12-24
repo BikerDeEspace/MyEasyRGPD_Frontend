@@ -1,0 +1,125 @@
+<header class="pia-headerBlock hide-for-print">
+  <div class="pia-logoBlock">
+    <div class="row">
+      <div class="small-12 medium-12 columns">
+        <div>
+        <a id="logo" routerLink="/home"><img src="assets/images/pia-lab-small.png" alt="Logo Lusis"></a>
+      </div>
+        <div class="hide-for-print pia-versionInfoBlock" *ngIf="appVersion">MyEasyRGPD - Version {{appVersion}}</div>
+      </div>
+    </div>
+  </div>
+  <nav class="pia-navigationBlock">
+    <div class="container">
+      <div class="row">
+        <div class="small-12 medium-12 columns">
+          <ul class="pia-navigationBlock-list">
+            <li>
+              <a routerLink="/dashboard" [ngClass]="{'active': currentRoute === '/dashboard'}">{{ 'dashboard.title' | translate }}</a>
+            </li>
+            <li *ngIf="hasPortfolio()">
+              <a routerLink="/portfolio" [ngClass]="{'active': currentRoute === '/portfolio'}">{{ 'header.portfolio_link' | translate }}</a>
+            </li>
+            <li *ngIf="hasOwnStructure()">
+              <a (click)="session.navigateToOwnStructure()" style="cursor:pointer;" [ngClass]="{'active': currentRoute.startsWith('/folders')}">{{ 'dashboard.items.processings' | translate }}</a>
+            </li>
+          </ul>
+          <ul class="pia-navigationBlock-list">
+            <!--<li>
+              <a href="#">{{ 'header.knowledge_base_link' | translate }}</a>
+            </li>
+            <li *ngxPermissionsOnly="['CanCreatePIAExample']">
+              <a
+              *ngIf="_languagesService.selectedLanguage === 'fr' && headerForHome"
+               href="javascript:;"
+               (click)="importPiaExample()">{{ 'header.pia_example_link' | translate }}</a>
+            </li>-->
+            <li *ngIf="profile" class="pia-navigationBlock-profile">
+              <a href="javascript:;">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <span [textContent]="profile.username"></span>
+              </a>
+              <ul id="user-block">
+                <li class="profile">
+                  <legend class="user-name">{{ profile.first_name }} {{ profile.last_name }}</legend>
+                  <p class="user-email">{{ profile.email }}</p>
+                </li>
+                <li class="logout">
+                  <a (click)="logoutAction()" class="btn btn-blue">
+                    {{ 'authentication.logout' | translate }}
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="pia-navigationBlock-languages">
+              <a href="javascript:;">
+                <i class="fa fa-globe" aria-hidden="true"></i>
+              </a>
+              <ul>
+                <li class="officialTranslation">{{ 'header.languages.official_translation' | translate }}</li>
+                <li [ngClass]="{'is_active': _languagesService.selectedLanguage === 'fr'}">
+                  <a href="javascript:;" (click)="_languagesService.updateCurrentLanguage('fr')">
+                    {{ 'header.languages.fr' | translate }}
+                  </a>
+                </li>
+                <li class="cnilTranslations">{{ 'header.languages.cnil_translations' | translate }}</li>
+                <li class="englishTranslation" [ngClass]="{'is_active': _languagesService.selectedLanguage === 'en'}">
+                  <a href="javascript:;" (click)="_languagesService.updateCurrentLanguage('en')">
+                    {{ 'header.languages.en' | translate }}
+                  </a>
+                </li>
+                <li class="communityTranslations">{{ 'header.languages.community_translations' | translate }}</li>
+                <li [ngClass]="{'is_active': _languagesService.selectedLanguage === 'cz'}">
+                  <a href="javascript:;" (click)="_languagesService.updateCurrentLanguage('cz')">
+                    {{ 'header.languages.cz' | translate }}
+                  </a>
+                </li>
+                <li [ngClass]="{'is_active': _languagesService.selectedLanguage === 'de'}">
+                  <a href="javascript:;" (click)="_languagesService.updateCurrentLanguage('de')">
+                    {{ 'header.languages.de' | translate }}
+                  </a>
+                </li>
+                <li [ngClass]="{'is_active': _languagesService.selectedLanguage === 'es'}">
+                  <a href="javascript:;" (click)="_languagesService.updateCurrentLanguage('es')">
+                    {{ 'header.languages.es' | translate }}
+                  </a>
+                </li>
+                <li [ngClass]="{'is_active': _languagesService.selectedLanguage === 'it'}">
+                  <a href="javascript:;" (click)="_languagesService.updateCurrentLanguage('it')">
+                    {{ 'header.languages.it' | translate }}
+                  </a>
+                </li>
+                <li [ngClass]="{'is_active': _languagesService.selectedLanguage === 'nl'}">
+                  <a href="javascript:;" (click)="_languagesService.updateCurrentLanguage('nl')">
+                    {{ 'header.languages.nl' | translate }}
+                  </a>
+                </li>
+                <li [ngClass]="{'is_active': _languagesService.selectedLanguage === 'pl'}">
+                  <a href="javascript:;" (click)="_languagesService.updateCurrentLanguage('pl')">
+                    {{ 'header.languages.pl' | translate }}
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="pia-navigationBlock-company">
+              <a href="javascript:;">
+                {{ 'header.tools.title' | translate }}
+                <span class="fa fa-angle-down" aria-hidden="true"></span>
+              </a>
+              <form>
+                <fieldset>
+                  <div>
+                    <a routerLink="/help">{{ 'header.tools.help' | translate }}</a>
+                  </div>
+                  <div>
+                    <a routerLink="/about">{{ 'header.tools.about' | translate }}</a>
+                  </div>
+                </fieldset>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

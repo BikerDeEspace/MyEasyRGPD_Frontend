@@ -1,12 +1,15 @@
 
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BaseService } from './base.service';
+import { BaseService } from '@api/service/base.service';
 import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
-
-import { AnswerService } from './answer.service';
-import { Pia, Template, Processing, Answer } from '../model';
+import { HttpClient } from '@angular/common/http';
+import { Pia } from '@api/model/pia.model';
+import { Evaluation } from '@api/model/evaluation.model';
+import { Answer } from '@api/model/answer.model';
+import { Injectable } from '@angular/core';
+import { BaseModel } from '@api/model/base.model';
+import { AnswerService } from '@api/service/answer.service';
+import { Template } from '@api/model/template.model';
+import { FolderModel } from '@api/models';
 
 @Injectable()
 export class PiaService extends BaseService<Pia> {
@@ -25,18 +28,18 @@ export class PiaService extends BaseService<Pia> {
     super(http);
   }
 
-  public computeProgressFromAnswers(model: Pia, answers: Answer[]): number {
-    model.progress = Math.round((100 / model.numberOfQuestions) * answers.length);
-    return model.progress;
+  public computeProgressFromAnswers(model: Pia, answers:Answer[]): number {
+      model.progress = Math.round((100 / model.numberOfQuestions) * answers.length);
+      return model.progress;
   }
 
-  public createFromTemplate(model: Pia, template: Template, processing: Processing): Observable<Pia> {
-    model.processing = processing;
-    return this.httpPost(this.routing.template, { templateId: template.id }, model);
+  public createFromTemplate(model: Pia, template: Template, folder: FolderModel): Observable<Pia> {
+    model.folder = folder;
+    return this.httpPost(this.routing.template, {templateId: template.id}, model);
   }
 
-  public getAll(criteria: any): Observable<Pia[]> {
-    return this.httpGetAll(this.routing.all, null, criteria);
+  public getAll(): Observable<Pia[]> {
+    return this.httpGetAll(this.routing.all);
   }
 
   public get(id: any): Observable<Pia> {
@@ -47,7 +50,8 @@ export class PiaService extends BaseService<Pia> {
     return this.httpPut(this.routing.one, { id: model.id }, model);
   }
 
-  public create(model: Pia): Observable<Pia> {
+  public create(model: Pia, folder: FolderModel): Observable<Pia> {
+    model.folder = folder;
     return this.httpPost(this.routing.all, {}, model);
   }
 
@@ -60,18 +64,18 @@ export class PiaService extends BaseService<Pia> {
   }
 
   public export(id: number): Observable<string> {
-    const query: any = this.buildQuery({});
-    const route = this.buildRoute(this.routing.export, { id: id });
+    let query: any = this.buildQuery({});
+    const route = this.buildRoute(this.routing.export, {id: id});
 
-    return this.http.get(route, { params: query }).pipe(map((res: any) => {
+    return this.http.get(route, { params: query }).map((res: any) => {
       return res
-    }));
+    });
   }
 
   public import(data: any): Observable<Pia> {
-    const query: any = this.buildQuery({});
-    const route = this.buildRoute(this.routing.import);
+    let query: any = this.buildQuery({});
+    const route = this.buildRoute(this.routing.import, {name: name});
 
-    return this.http.post(route, { data: data }, { params: query }).pipe(map(res => this.mapToModel(res, this.modelClass)));
+    return this.http.post(route, {data: data}, { params: query }).map(res => this.mapToModel(res, this.modelClass));
   }
 }

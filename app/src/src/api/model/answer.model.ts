@@ -1,5 +1,5 @@
 import { StringUtil, ArrayUtil } from '@utils/core';
-import { BaseModel } from './base.model';
+import { BaseModel } from '@api/model/base.model'
 
 export class Answer extends BaseModel {
   public id: any;

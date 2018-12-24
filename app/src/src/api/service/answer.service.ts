@@ -1,8 +1,10 @@
 
-import { BaseService } from './base.service';
+import { BaseService } from '@api/service/base.service';
 import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+import { Answer } from '@api/model/answer.model';
 import { Injectable } from '@angular/core';
-import { Answer} from '../model';
+import { BaseModel } from '@api/model/base.model';
 
 @Injectable()
 export class AnswerService extends BaseService<Answer> {

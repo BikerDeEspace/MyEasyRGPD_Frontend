@@ -2,8 +2,8 @@ import { Component, Renderer2, Pipe, PipeTransform, TemplateRef } from '@angular
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { KnowledgeBaseService } from './entry/knowledge-base/knowledge-base.service';
-import { LanguagesService } from './services/languages.service';
+import { KnowledgeBaseService } from 'app/entry/knowledge-base/knowledge-base.service';
+import { LanguagesService } from 'app/services/languages.service';
 import { PermissionsService } from '@security/permissions.service';
 import { NgxPermissionsConfigurationService } from 'ngx-permissions';
 
@@ -57,28 +57,24 @@ export class AppComponent {
 
      /*  PERMISSIONS */
 
-    const roles = {};
+    let roles = {};
 
     roles['ROLE_USER'] = [];
 
     roles['ROLE_CONTROLLER'] = [
-      'CanCreatePIA', 'CanDeletePIA', 'CanCreatePIAExample', 'CanShowPIA', 'CanEditPIA', 'CanCancelEvaluatePIA', 'CanAskEvaluatePIA',
-      'CanCreateProcessing', 'CanEditProcessing', 'CanImportProcessing', 'CanExportProcessing', 'CanShowProcessing', 'CanDeleteProcessing',
+      'CanEditPIA', 'CanCancelEvaluatePIA', 'CanAskEvaluatePIA',
       'AccessToContextSection', 'AccessToPrinciplesSection', 'AccessToRisksSection'
     ];
     roles['ROLE_DPO'] = roles['ROLE_CONTROLLER'].concat([
+      'CanCreatePIA', 'CanCreatePIAExample', 'CanShowPIA',
       'CanEvaluatePIA', 'CanValidatePIA', 'CanCancelValidatePIA',
-      'CanCreateFolder', 'AccessToValidationSection', 'CanEditStructure',
+      'CanDeletePIA','CanImportPIA', 'CanExportPIA', 'CanCreateFolder',
+       'AccessToValidationSection'
     ]);
-    roles['ROLE_SHARED_DPO'] = roles['ROLE_DPO'];
 
     roles['ROLE_ADMIN'] = [].concat(roles['ROLE_DPO']);
-    
     roles['ROLE_TECHNICAL_ADMIN'] = [].concat(roles['ROLE_ADMIN']);
-    
-    roles['ROLE_SUPER_ADMIN'] = [].concat(roles['ROLE_TECHNICAL_ADMIN']).concat([
-      'CanImportPIA', 'CanExportPIA'
-    ]);
+    roles['ROLE_SUPER_ADMIN'] = [].concat(roles['ROLE_TECHNICAL_ADMIN']);
 
     this.permissionsService.loadRolesAndPermissions(roles);
 /*

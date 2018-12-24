@@ -1,5 +1,5 @@
 import { StringUtil } from '@utils/string.util';
-import { BaseModel } from './base.model';
+import { BaseModel } from '@api/model/base.model'
 
 export class Measure extends BaseModel {
 

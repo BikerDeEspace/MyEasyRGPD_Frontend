@@ -1,8 +1,9 @@
 
-import { BaseService } from './base.service';
+import { BaseService } from '@api/service/base.service';
 import { Observable } from 'rxjs/Observable';
-import { Comment } from '../model';
+import { Comment } from '@api/model/comment.model';
 import { Injectable } from '@angular/core';
+import { BaseModel } from '@api/model/base.model';
 
 @Injectable()
 export class CommentService extends BaseService<Comment> {

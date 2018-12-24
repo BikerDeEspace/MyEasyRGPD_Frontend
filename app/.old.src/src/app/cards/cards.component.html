@@ -1,0 +1,168 @@
+<app-header></app-header>
+
+<div class="container pia-mainContainerBlock">
+  <div class="row">
+
+    <div class="small-12 medium-12 columns">
+      <h2 class="page-title">
+        
+        <i class="fa fa-building" aria-hidden="true"></i>
+        {{structure.name}}
+        <a class="btn btn-green structure-info-button" routerLink="/structure/{{structure.id}}">
+          <i class="fa fa-info-circle"></i>
+          <span>{{ 'homepage.structure.info_button' | translate}}</span>
+        </a>
+        <br>
+        <small>{{ 'homepage.cards.processing_register' | translate}}</small>
+      </h2>
+      <div class="pia-filtersBlock">
+        <!--
+
+          Hiding list button because of lack of working feature with this view mode
+
+        <button class="pia-filtersBlock-switch btn" type="button" *ngIf="viewStyle.view === 'list'" (click)="viewOnCard()">
+          <i class="fa fa-list" aria-hidden="true"></i>
+          <div>{{ 'homepage.filters.card' | translate }}</div>
+        </button>
+        <button class="pia-filtersBlock-switch btn" type="button" *ngIf="viewStyle.view === 'card'" (click)="viewOnList()">
+          <i class="fa fa-list" aria-hidden="true"></i>
+          <div>{{ 'homepage.filters.list' | translate }}</div>
+        </button>
+
+        -->
+        <div class="pia-filtersBlock-filters menu-sort">
+          <button class="pia-filtersBlock-filters-btn btn" type="button">
+            {{ 'homepage.filters.sort' | translate }} {{ 'homepage.filters.sort_by' | translate }}...
+            <span class="fa fa-angle-down"></span>
+          </button>
+          <div class="pia-filtersBlock-filters-list">
+            <ul>
+              <li [ngClass]="{'active': sortValue === 'name'}">
+                <a (click)="sortBy('name');">{{ 'homepage.filters.name' | translate }}</a>
+              </li>
+              <li [ngClass]="{'active': sortValue === 'created_at'}">
+                <a (click)="sortBy('created_at');">{{ 'homepage.filters.date' | translate }}</a>
+              </li>
+              <li [ngClass]="{'active': sortValue === 'status'}">
+                <a (click)="sortBy('status');">{{ 'homepage.filters.status' | translate }}</a>
+              </li>
+              <li [ngClass]="{'active': sortValue === 'author_name'}">
+                <a (click)="sortBy('author');">{{ 'homepage.filters.author' | translate }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!--
+          <div class="pia-filtersBlock-filters menu-creation" *ngxPermissionsOnly="['CanCreatePIA']">
+            <button class="pia-filtersBlock-filters-btn btn" type="button">
+              {{ 'homepage.filters.new' | translate }}
+              <span class="fa fa-angle-down"></span>
+            </button>
+            <div class="pia-filtersBlock-filters-list">
+              <ul>
+                <li>
+                  <button name="create-pia-btn" (click)="_modalsService.openModal('modal-list-new-pia')">{{ 'homepage.filters.new_pia' | translate }}</button>
+                </li>
+                <li >
+                  <button name="create-from-tpl-btn" routerLink="/templates">{{ 'homepage.filters.new_from_template' | translate }}</button>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <button name="create-folder-btn" (click)="_modalsService.openModal('modal-list-new-folder')">{{ 'homepage.filters.new_folder' | translate }}</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+         -->
+        <div class="pia-filtersBlock-filters menu-creation" *ngxPermissionsOnly="['CanCreateProcessing']">
+          <button class="pia-filtersBlock-filters-btn btn" type="button">
+            {{ 'homepage.filters.new' | translate }}
+            <span class="fa fa-angle-down"></span>
+          </button>
+          <div class="pia-filtersBlock-filters-list">
+            <ul>
+              <li>
+                <button name="create-processing-btn" (click)="_modalsService.openModal('modal-list-new-processing')">{{ 'homepage.filters.new_processing' | translate }}</button>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <button name="create-folder-btn" (click)="_modalsService.openModal('modal-list-new-folder')">{{ 'homepage.filters.new_folder' | translate }}</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!--
+        <div class="pia-filtersBlock-buttons" *ngxPermissionsOnly="['CanImportPIA']">
+          <button type="button" (click)="importPia()" class="btn btn-green">
+            <i class="fa fa-upload" aria-hidden="true"></i>{{ 'homepage.filters.import_pia' | translate }}
+          </button>
+        </div>
+
+        <div class="hide">
+          <form enctype="multipart/form-data" [formGroup]="importPiaForm">
+            <input type="file" formControlName="import_file" id="import_file" (change)="importPia($event)" class="hide">
+          </form>
+          <a href="" id="pia-exportBlock"></a>
+        </div>
+        -->
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 medium-12 columns" *ngIf="_piaService.currentFolder">
+      <ul class="breadcrumbs folder-breadcrumbs">
+          <li *ngFor="let item of _piaService.currentFolder.hierarchy">
+              <a routerLink="/folders" *ngIf="item.lvl == 0">
+                <i class="fa fa-folder-open"></i>
+                {{ 'homepage.cards.folder.root' | translate }}
+              </a>
+              <a routerLink="/folders/{{item.id}}" *ngIf="item.lvl > 0">
+                <i class="fa fa-folder-open"></i>
+                {{ item.name }}
+              </a>
+          </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngIf="viewStyle.view === 'card'" class="small-12 medium-12 columns cardsContainer">
+      <div class="pia-folder-item parent" *ngIf="_piaService.currentFolder && _piaService.currentFolder.parent != null"
+        dndDropzone
+        (dndDrop)="onDrop(_piaService.currentFolder.parent)"
+      >
+        <div class="folder-icon" routerLink="{{getRouteToParentFolder()}}">
+          <i class="fa fa-level-up" aria-hidden="true"></i>
+
+        </div>
+        <div class="folder-title">{{ 'homepage.cards.folder.parent' | translate }}</div>
+        <div class="bottom-actions">
+            <a class="btn btn-green" routerLink="{{getRouteToParentFolder()}}" href="#" >
+              {{ 'homepage.cards.item.back_to_parent' | translate }}
+            </a>
+        </div>
+      </div>
+      <app-folder-item *ngFor="let folder of _piaService.folders;let i=index"
+        [folder]="folder"
+        [dndDraggable]=""
+        [dndDisableIf]="!canCreateProcessing"
+        [dndEffectAllowed]="'move'"
+        (dndStart)="onDragStart(folder)"
+        (dndCanceled)="onDragCanceled()"
+        dndDropzone
+        [ngClass]="{'dndDropzoneDisabled': itemToMove && itemToMove.id == folder.id}"
+        (dndDrop)="onDrop(folder)"
+      ></app-folder-item>
+      <app-card-item *ngFor="let processing of _piaService.processings;let i=index"
+        [processing]="processing"
+        [previousProcessing]="i > 0 ? _piaService.processings[i-1] : null"
+        [dndDraggable]=""
+        [dndDisableIf]="!canCreateProcessing"
+        [dndEffectAllowed]="'move'"
+        (dndStart)="onDragStart(processing)"
+        (dndCanceled)="onDragCanceled()"
+      ></app-card-item>
+    </div>
+    <app-lists *ngIf="viewStyle.view === 'list'"></app-lists>
+  </div>
+</div>
+<app-modals></app-modals>
