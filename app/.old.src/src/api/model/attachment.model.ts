@@ -1,5 +1,5 @@
 
-import { BaseModel } from './base.model';
+import { BaseModel } from '@api/model/base.model'
 
 export class Attachment extends BaseModel {
 

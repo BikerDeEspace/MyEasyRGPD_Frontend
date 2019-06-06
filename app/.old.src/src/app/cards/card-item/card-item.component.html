@@ -1,34 +1,44 @@
-<div class="pia-cardsBlock pia" [ngClass]="{'pia-archiveBlock': processing.status == 1}" [attr.data-id]="processing.id" [attr.data-name]="processing.name">
-    <div class="pia-cardsBlock-header-title" *ngIf="processing.id !== null">
-      <span *ngIf="!previousProcessing || previousProcessing.status !== processing.status">{{ ('processing.statuses.' + processing.status) | translate }}</span>
+<div class="pia-cardsBlock pia" [ngClass]="{'pia-exampleBlock': pia.is_example, 'pia-archiveBlock': pia.status > 1, 'pia-doingBlock': pia.status < 2}" [attr.data-id]="pia.id">
+    <div class="pia-cardsBlock-header-title" *ngIf="pia.id !== null">
+      <span *ngIf="!previousPia || previousPia.status !== pia.status">{{ pia.getStatusLabel() | translate }}</span>
     </div>
     <div class="pia-cardsBlock-item pia-doingBlock-item">
+      <div *ngIf="attachments && attachments.length > 0" class="pia-cardsBlock-item-attachment" aria-hidden="true">
+        <span class="pia-icons pia-icon-attachment"></span>
+        <ul>
+          <ng-container *ngFor="let attachment of attachments">
+            <li>
+              {{ attachment.name }}
+            </li>
+          </ng-container>
+        </ul>
+      </div>
       <div class="pia-cardsBlock-toolbar">
-          <!--
-          <div class="pia-cardsBlock-toolbar-export" *ngxPermissionsOnly="['CanExportProcessing']">
-            <a href="javascript:;" (click)="export(processing.id)" class="btn pia-tooltip">
+          <div class="pia-cardsBlock-toolbar-export" *ngxPermissionsOnly="['CanExportPIA']">
+            <a href="javascript:;" (click)="export(pia.id)" class="btn pia-tooltip">
               <i class="fa fa-download" aria-hidden="true"></i>
               <span class="pia-tooltip-text">{{ 'homepage.cards.item.tools.export' | translate }}</span>
             </a>
           </div>
-          -->
           <div class="pia-cardsBlock-toolbar-more">
-            <a href="javascript:;" class="btn pia-tooltip pia-dropdown-icon" title="{{ 'homepage.cards.item.tools.more_options' | translate }}">
+            <a href="javascript:;" class="btn pia-tooltip" title="{{ 'homepage.cards.item.tools.more_options' | translate }}">
               <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
               <ul class="pia-cardsBlock-toolbar-moreList">
-                <!--
-                <li *ngxPermissionsOnly="['CanCreateProcessing']">
+                <li *ngxPermissionsOnly="['CanCreatePIA']">
                   <i class="fa fa-files-o" aria-hidden="true"></i>
-                  <a href="javascript:;" (click)="_piaService.duplicate(processing.id)">{{ 'homepage.cards.item.tools.duplicate' | translate }}</a>
+                  <a href="javascript:;" (click)="_piaService.duplicate(pia.id)">{{ 'homepage.cards.item.tools.duplicate' | translate }}</a>
                 </li>
-               -->
+                <li>
+                  <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                  <a routerLink="/summary/{{pia.id}}" [queryParams]="{ displayOnlyActionPlan: true }" [innerHTML]="'homepage.cards.item.tools.action_plan' | translate"></a>
+                </li>
                 <li>
                   <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                  <a routerLink="/processing/{{processing.id}}/pias" [innerHTML]="'homepage.cards.item.tools.show_pias' | translate"></a>
+                  <a routerLink="/summary/{{pia.id}}" [innerHTML]="'homepage.cards.item.tools.pia' | translate"></a>
                 </li>
-                <li *ngxPermissionsOnly="['CanDeleteProcessing']">
+                <li *ngxPermissionsOnly="['CanDeletePIA']">
                   <i class="fa fa-trash-o" aria-hidden="true"></i>
-                  <a href="javascript:;" (click)="removeProcessing(processing.id)" class="delete-processing">{{ 'homepage.cards.item.tools.remove' | translate }}</a>
+                  <a href="javascript:;" (click)="removePia(pia.id)">{{ 'homepage.cards.item.tools.remove' | translate }}</a>
                 </li>
               </ul>
             </a>
@@ -36,56 +46,83 @@
       </div>
 
       <form class="pia-cardsBlock-item-form"
-            [formGroup]="processingForm">
+            [formGroup]="piaForm">
           <input type="hidden" formControlName="id">
-          <div (click)="processingNameFocusIn()">
-              <label for="pia-edit-name[{{processing.id}}]">{{ 'homepage.cards.processing_name' | translate }}</label>
+          <div (click)="piaNameFocusIn()">
+              <label for="pia-edit-name">{{ 'homepage.cards.pia_name' | translate }}</label>
               <input type="text"
-                     #processingName
+                     #piaName
                      formControlName="name"
                      required
-                     placeholder="{{ 'homepage.cards.placeholder_processing_name' | translate }}"
-                     id="pia-edit-name[{{processing.id}}]"
-                     (focusout)="processingNameFocusOut()">
+                     placeholder="{{ 'homepage.cards.placeholder_pia_name' | translate }}"
+                     id="pia-edit-name"
+                     (focusout)="piaNameFocusOut()">
           </div>
-          <div (click)="processingAuthorFocusIn()">
-              <label for="pia-edit-author-name[{{processing.id}}]">{{ 'homepage.cards.author' | translate }}</label>
+          <!-- hide the type feature-->
+          <div *ngIf="false">
+              <label for="pia-edit-type">{{ 'homepage.cards.pia_type' | translate }}</label>
+              <select
+                     #piaType
+                     formControlName="type"
+                     required
+                     id="pia-edit-type"
+                     (change)="piaTypeFocusOut()"
+              >
+                  <option *ngFor="let type of piaTypes" value="{{ type }}">{{ 'homepage.cards.pia_types.' + type | translate }}</option>
+              </select>
+          </div>
+          <div (click)="piaAuthorNameFocusIn()">
+              <label for="pia-edit-author-name">{{ 'homepage.cards.author' | translate }}</label>
               <input type="text"
-                     #processingAuthor
-                     formControlName="author"
+                     #piaAuthorName
+                     formControlName="author_name"
                      required
                      placeholder="{{ 'homepage.cards.placeholder_author' | translate }}"
-                     id="pia-edit-author-name[{{processing.id}}]"
-                     (focusout)="processingAuthorFocusOut()">
+                     id="pia-edit-author-name"
+                     (focusout)="piaAuthorNameFocusOut()">
           </div>
-          <div (click)="processingDesignatedControllerFocusIn()">
-              <label for="pia-edit-designated-controller[{{processing.id}}]">{{ 'homepage.cards.designated_controller' | translate }}</label>
+          <div (click)="piaEvaluatorNameFocusIn()">
+              <label for="pia-edit-evaluator-name">{{ 'homepage.cards.evaluation' | translate }}</label>
               <input type="text"
-                     #processingDesignatedController
-                     formControlName="designated_controller"
+                     #piaEvaluatorName
+                     formControlName="evaluator_name"
                      required
-                     placeholder="{{ 'homepage.cards.placeholder_designated_controller' | translate }}"
-                     id="pia-edit-designated-controller[{{processing.id}}]"
-                     (focusout)="processingDesignatedControllerFocusOut()">
+                     placeholder="{{ 'homepage.cards.placeholder_evaluation' | translate }}"
+                     id="pia-edit-evaluator-name"
+                     (focusout)="piaEvaluatorNameFocusOut()">
+          </div>
+          <div (click)="piaValidatorNameFocusIn()">
+              <label for="pia-edit-validator-name">{{ 'homepage.cards.validation' | translate }}</label>
+              <input type="text"
+                     #piaValidatorName
+                     formControlName="validator_name"
+                     required
+                     placeholder="{{ 'homepage.cards.placeholder_validation' | translate }}"
+                     id="pia-edit-validator-name"
+                     (focusout)="piaValidatorNameFocusOut()">
           </div>
         <div class="pia-cardsBlock-item-date">
             <div>{{ 'homepage.cards.date' | translate }}</div>
-            <time>{{ processing.created_at | date: 'dd/MM/yyyy' }}</time>
+            <time>{{ pia.created_at | date: 'dd/MM/yyyy' }}</time>
         </div>
         <div class="pia-cardsBlock-item-status">
             <div class="pia-cardsBlock-item-status-infos">
                 <div>{{ 'homepage.cards.status' | translate }}</div>
-                <div>
-                  {{ ('processing.statuses.' + processing.status) | translate }}
+                <div class="pendingValidation" *ngIf="pia.status === 0 && pia.progress === 100;else defaultStatuses">
+                  {{ 'pia.statuses.5' | translate }}
                 </div>
+                <ng-template #defaultStatuses>
+                  <div>{{ pia.getStatusLabel() | translate }}</div>
+                </ng-template>
+            </div>
+            <div class="pia-cardsBlock-item-status-progressBar">
+                <div>{{ pia.progress }}%</div>
+                <progress max="100" value="{{ pia.progress }}"></progress>
             </div>
         </div>
-        <div class="pia-cardsBlock-item-pias-number">
-          <label for="pia-edit-validator-name">{{ 'homepage.cards.pias_number' | translate }}</label>
-          <div>{{ processing.pias_count }}</div>
-        </div>
         <div class="pia-cardsBlock-item-btn bottom-actions">
-          <a routerLink="/processing/{{processing.id}}" class="btn btn-edit btn-green">{{ 'homepage.cards.item.consult_processing' | translate }}</a>
+          <a *ngIf="pia.status === 0" routerLink="/entry/{{pia.id}}/section/1/item/1" class="btn btn-green">{{ 'homepage.cards.item.edit_pia' | translate }}</a>
+          <a *ngIf="pia.status > 0" routerLink="/entry/{{pia.id}}/section/1/item/1" class="btn btn-green">{{ 'homepage.cards.item.consult_pia' | translate }}</a>
         </div>
       </form>
   </div>
