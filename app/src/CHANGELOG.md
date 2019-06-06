@@ -1,19 +1,8 @@
 # Change Log
 
-## [1.4.5](https://github.com/pia-lab/pialab/tree/1.4.5) (2018-08-28)
-[Full Changelog](https://github.com/pia-lab/pialab/compare/1.4.4...1.4.5)
+## [Unreleased](https://github.com/pia-lab/pialab/tree/HEAD)
 
-## [1.4.4](https://github.com/pia-lab/pialab/tree/1.4.4) (2018-08-28)
-[Full Changelog](https://github.com/pia-lab/pialab/compare/1.4.3...1.4.4)
-
-## [1.4.3](https://github.com/pia-lab/pialab/tree/1.4.3) (2018-08-27)
-[Full Changelog](https://github.com/pia-lab/pialab/compare/1.2.5...1.4.3)
-
-## [1.2.5](https://github.com/pia-lab/pialab/tree/1.2.5) (2018-08-23)
-[Full Changelog](https://github.com/pia-lab/pialab/compare/1.2.6...1.2.5)
-
-## [1.2.6](https://github.com/pia-lab/pialab/tree/1.2.6) (2018-08-23)
-[Full Changelog](https://github.com/pia-lab/pialab/compare/1.3.1...1.2.6)
+[Full Changelog](https://github.com/pia-lab/pialab/compare/1.3.1...HEAD)
 
 **Closed issues:**
 
@@ -73,7 +62,10 @@
 - Add customer portfolio management [\#36](https://github.com/pia-lab/pialab/pull/36) ([PapsOu](https://github.com/PapsOu))
 
 ## [1.2.4](https://github.com/pia-lab/pialab/tree/1.2.4) (2018-07-17)
-[Full Changelog](https://github.com/pia-lab/pialab/compare/1.2.3...1.2.4)
+[Full Changelog](https://github.com/pia-lab/pialab/compare/1.2.5...1.2.4)
+
+## [1.2.5](https://github.com/pia-lab/pialab/tree/1.2.5) (2018-07-17)
+[Full Changelog](https://github.com/pia-lab/pialab/compare/1.2.3...1.2.5)
 
 ## [1.2.3](https://github.com/pia-lab/pialab/tree/1.2.3) (2018-07-12)
 [Full Changelog](https://github.com/pia-lab/pialab/compare/1.2.2...1.2.3)
