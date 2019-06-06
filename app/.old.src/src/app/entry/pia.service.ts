@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
-import { AppDataService } from '../services/app-data.service';
-import { ModalsService } from '../modals/modals.service';
-import { PiaModel, AnswerModel, EvaluationModel, FolderModel, ProcessingModel } from '@api/models';
-import { PiaApi, EvaluationApi, FolderApi, ProcessingApi } from '@api/services';
+import { AppDataService } from 'app/services/app-data.service';
+import { ModalsService } from 'app/modals/modals.service';
+import { ActionPlanService } from 'app/entry/entry-content/action-plan//action-plan.service';
+
+// new imports
+
+import { Observable } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { PiaModel, AnswerModel, CommentModel, EvaluationModel, MeasureModel, AttachmentModel, FolderModel } from '@api/models';
+import { PiaApi, AnswerApi, CommentApi, EvaluationApi, MeasureApi, AttachmentApi, FolderApi } from '@api/services';
 
 @Injectable()
 export class PiaService {
 
   pias = [];
-  processings = [];
   folders = [];
   currentFolder: FolderModel = null
-  currentProcessing: ProcessingModel = null;
   isRootFolder: boolean = false
   pia: PiaModel = new PiaModel();
   answer: AnswerModel = new AnswerModel();
@@ -23,12 +25,16 @@ export class PiaService {
 
   constructor(
     private _router: Router,
+    private route: ActivatedRoute,
     private _appDataService: AppDataService,
     private _modalsService: ModalsService,
     private piaApi: PiaApi,
+    private answerApi: AnswerApi,
+    private commentApi: CommentApi,
     private evaluationApi: EvaluationApi,
-    private folderApi: FolderApi,
-    private processingApi: ProcessingApi
+    private measureApi: MeasureApi,
+    private attachmentApi: AttachmentApi,
+    private folderApi: FolderApi
   ) {
     this._appDataService.getDataNav().then((dataNav) => {
       this.data = dataNav;
@@ -42,10 +48,10 @@ export class PiaService {
    */
   retrieveCurrentPIA(id: number): Observable<PiaModel> {
 
-    return this.piaApi.get(id).pipe(map((thePia: PiaModel) => {
+    return this.piaApi.get(id).map((thePia: PiaModel) => {
       this.pia.fromJson(thePia);
       return this.pia;
-    }));
+    });
 
   }
 
@@ -69,38 +75,13 @@ export class PiaService {
     // Removes from DB.
     this.piaApi.deleteById(piaID).subscribe(() => {
       // Deletes the PIA from the view.
-      let element = null;
       if (localStorage.getItem('homepageDisplayMode') && localStorage.getItem('homepageDisplayMode') === 'list') {
-        element = document.querySelector('.app-list-item[data-id="' + piaID + '"]');
+        document.querySelector('.app-list-item[data-id="' + piaID + '"]').remove();
       } else {
-        element = document.querySelector('.pia-cardsBlock.pia[data-id="' + piaID + '"]');
+        document.querySelector('.pia-cardsBlock.pia[data-id="' + piaID + '"]').remove();
       }
-      if (element) {
-        element.remove()
-      };
 
       localStorage.removeItem('pia-id');
-    });
-
-    this._modalsService.closeModal();
-  }
-
-  /**
-   * Allows an user to remove a PIA.
-   * @memberof PiaService
-   */
-  removeProcessing() {
-    const processingID = parseInt(localStorage.getItem('processing-id'), 10);
-    // Removes from DB.
-    this.processingApi.deleteById(processingID).subscribe(() => {
-      // Deletes the PIA from the view.
-      if (localStorage.getItem('homepageDisplayMode') && localStorage.getItem('homepageDisplayMode') === 'list') {
-        document.querySelector('.app-list-item[data-id="' + processingID + '"]').remove();
-      } else {
-        document.querySelector('.pia-cardsBlock.pia[data-id="' + processingID + '"]').remove();
-      }
-
-      localStorage.removeItem('processing-id');
     });
 
 
@@ -109,9 +90,8 @@ export class PiaService {
 
   removeFolder() {
     const folderID = parseInt(localStorage.getItem('folder-id'), 10);
-    const structureID = parseInt(localStorage.getItem('structure-id'), 10);
     // Removes from DB.
-    this.folderApi.deleteById(structureID, folderID).subscribe(() => {
+    this.folderApi.deleteById(folderID).subscribe(() => {
       // Deletes the Folder from the view.
       if (localStorage.getItem('homepageDisplayMode') && localStorage.getItem('homepageDisplayMode') === 'list') {
         document.querySelector('tr.app-list-item-folder[data-id="' + folderID + '"]').remove();
@@ -266,10 +246,10 @@ export class PiaService {
   }
 
   public saveCurrentPia(): Observable<PiaModel> {
-    return this.piaApi.update(this.pia).pipe(map((updatedPia: PiaModel) => {
+    return this.piaApi.update(this.pia).map((updatedPia: PiaModel) => {
       this.pia = updatedPia;
       return this.pia;
-    }));
+    });
   }
 
   /**

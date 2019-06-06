@@ -5,7 +5,6 @@ import { FolderModel } from '@api/models';
 import { PiaService } from '../../entry/pia.service';
 import { ModalsService } from '../../modals/modals.service';
 import {PermissionsService} from '@security/permissions.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-folder-item',
@@ -13,13 +12,12 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./folder-item.component.scss']
 })
 export class FolderItemComponent implements OnInit {
-  @Input() folder;
-  @Input() previousFolder;
+  @Input() folder
+  @Input() previousFolder
 
   folderForm: FormGroup
 
   constructor(
-    private route: ActivatedRoute,
     private folderApi: FolderApi,
     private _piaService: PiaService,
     private _modalsService: ModalsService,
@@ -27,7 +25,6 @@ export class FolderItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
     this.folderForm = new FormGroup({
       name: new FormControl(this.folder.name)
     });
@@ -53,7 +50,7 @@ export class FolderItemComponent implements OnInit {
     }
     if (userText !== '') {
 
-      this.folderApi.get(this.folder.structure_id, this.folder.id).subscribe((theFolder: FolderModel) => {
+      this.folderApi.get(this.folder.id).subscribe((theFolder: FolderModel) => {
         theFolder.name = userText;
         this.folderApi.update(theFolder).subscribe();
       });
@@ -61,9 +58,7 @@ export class FolderItemComponent implements OnInit {
   }
 
   removeFolder(folder: FolderModel) {
-    //@todo waiting for modal refactoring
     localStorage.setItem('folder-id', folder.id);
-    //@note structure-id is already set by ProfileSession
     this._modalsService.openModal('modal-remove-folder');
   }
 }

@@ -69,7 +69,7 @@ fi
 # Apache Conf
 if [ -z "${ServerName}" ]
 then
-    ServerName=lusis.lu
+    ServerName=pialab.io
     if [ -n "${FrontUrl}" ]
     then
         ServerName=$(echo $FrontUrl | sed -e s:.*//::g | sed -e s:/.*::g | sed -e s/:.*//g )

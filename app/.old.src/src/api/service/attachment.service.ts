@@ -1,8 +1,9 @@
 
-import { BaseService } from './base.service';
+import { BaseService } from '@api/service/base.service';
 import { Observable } from 'rxjs/Observable';
-import { Attachment } from '../model';
+import { Attachment } from '@api/model/attachment.model';
 import { Injectable } from '@angular/core';
+import { BaseModel } from '@api/model/base.model';
 
 @Injectable()
 export class AttachmentService extends BaseService<Attachment> {

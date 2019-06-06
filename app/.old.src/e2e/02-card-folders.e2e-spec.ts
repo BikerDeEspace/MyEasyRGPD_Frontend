@@ -1,59 +1,57 @@
-import { browser } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { LoginPage } from './page/login.po';
-import { Dashboard } from './page/dashboard.po';
-import { Folders } from './page/folders.po';
+import { HomePage } from './page/home.po';
 import { FolderCreationModal } from './modal/folder-creation.po';
-import { FolderDeleteConfirmationModal } from './modal/folder-delete-confirmation.po';
-import { Header } from './element/header.po';
+import { FolderDeletionModal } from './modal/folder-deletion.po';
 import { FolderCards } from './element/folder-cards.po';
 import './set-env';
 
 
-describe('Processing folder management', () => {
+describe('PIA folder management', () => {
 
   const auth = {
     username: process.env.TEST_USERNAME,
     password: process.env.TEST_PASSWORD
   };
   const salt = Math.random().toString(36).substring(2, 8);
-  const folderName = 'Test Folder ' + salt;
+  const folderName = "Test Folder "+ salt;
 
-  const loginPage = new LoginPage();
-  const dashboard = new Dashboard();
-  const header = new Header();
-  const folders = new Folders();
-  const folderCreationModal = new FolderCreationModal();
-  const folderDeleteConfirmationModal = new FolderDeleteConfirmationModal();
-  const folderCards = new FolderCards();
+  let loginPage: LoginPage;
+  let homePage: HomePage;
+  let folderCreationModal: FolderCreationModal;
+  let folderDeletionModal: FolderDeletionModal;
+  let folderCards: FolderCards;
 
   beforeEach(() => {
-    loginPage.authenticate(auth.username, auth.password);
+    loginPage = new LoginPage();
+    homePage = new HomePage();
+    folderCreationModal = new FolderCreationModal();
+    folderDeletionModal = new FolderDeletionModal();
+    folderCards = new FolderCards();
+
+    loginPage.navigateTo();
+    loginPage.clearSessionAndStorage();
+    loginPage.fillCredentionals(auth.username, auth.password);
+    loginPage.submitCredentials();
 
     browser.wait(function() {
       return browser.getCurrentUrl().then(function(url) {
-        return /dashboard/.test(url);
-      });
-    }, 10000);
-
-    dashboard.clickOnDashboardItem('processings');
-
-    browser.wait(function() {
-      return browser.getCurrentUrl().then(function(url) {
-        return /folders/.test(url);
+        return /home/.test(url);
       });
     }, 10000);
 
   });
 
   afterEach(() => {
-    header.clickOnLogoutInProfileMenu();
+    loginPage = new LoginPage();
+    homePage.clickOnLogoutInProfileMenu();
   });
 
-  it('when user creates a folder - a popup has to be filled and the created folder appears on the page', () => {
+  it('when user create a folder - a popup has to be filled and the created folder appear on the page', () => {
 
-    folders.clickOnCreateFolderInCreationMenu().then(() => {
+    homePage.clickOnCreateFolderInCreationMenu().then(() => {
         expect(folderCreationModal.el().isDisplayed()).toBeTruthy();
-
+        
         folderCreationModal.fillFolderName(folderName);
 
         folderCreationModal.submitForm().then(() => {
@@ -65,16 +63,16 @@ describe('Processing folder management', () => {
 
   });
 
-  it('when user deletes a folder - a popup asks for confirmation and the folder is deleted', () => {
+  it('when user delete a folder - a popup ask for confirmation and the folder is deleted', () => {
 
     folderCards.byFolderName(folderName).clickOnDeleteInToolMenu().then(() => {
-      expect(folderDeleteConfirmationModal.el().isDisplayed()).toBeTruthy();
+      expect(folderDeletionModal.el().isDisplayed()).toBeTruthy();
     });
 
-    folderDeleteConfirmationModal.confirmDeletion().then(() => {
-      expect(folderDeleteConfirmationModal.el().isDisplayed()).toBeFalsy();
+    folderDeletionModal.confirmDeletion().then(() => {
+      expect(folderDeletionModal.el().isDisplayed()).toBeFalsy();
       expect(folderCards.byFolderName(folderName).el().isPresent()).toBeFalsy();
-    });
+    })
 
   });
 

@@ -11,7 +11,7 @@
             margin-left: -35px;
             background-color: $pia-green;
             padding: 3px 5px;
-            color: $pia-full-white;
+            color: #fff;
             font-size: 1rem;
             text-align: center;
             height: auto;
@@ -45,13 +45,13 @@ progress[value] {
     height: 12px;
     width: 90px;
     margin-top: 5px;
-    background-color: $pia-full-white;
+    background-color: #fff;
     position: relative;
     &::-webkit-progress-bar {
-        background-color: $pia-full-white;
+        background-color: #fff;
     }
     &::-moz-progress-bar {
-        background-color: $pia-full-white;
+        background-color: #fff;
     }
     &::-webkit-progress-value {
         background-color: $pia-green;

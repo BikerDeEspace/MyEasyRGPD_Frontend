@@ -1,14 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, DoCheck, OnInit, OnDestroy } from '@angular/core';
 import { Renderer2 } from '@angular/core';
-import { environment } from 'environments/environment';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { PiaService } from '../entry/pia.service';
-import { LanguagesService } from '../services/languages.service';
+import { Pia } from 'app/entry/pia.model';
+
+import { TranslateService } from '@ngx-translate/core';
+import { PiaService } from 'app/entry/pia.service';
+import { ModalsService } from 'app/modals/modals.service';
+import { LanguagesService } from 'app/services/languages.service';
 import { AuthenticationService } from '@security/authentication.service'
-import { ProfileSession } from 'app/services/profile-session.service';
 
 @Component({
   selector: 'app-header',
@@ -16,25 +19,21 @@ import { ProfileSession } from 'app/services/profile-session.service';
   styleUrls: ['./header.component.scss'],
   providers: [],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   public increaseContrast: string;
   public profile: any;
   private profileSubscription: Subscription;
   appVersion: string;
   headerForHome: boolean;
-  _hasPortfolio: boolean = false;
-  _hasOwnStructure: boolean = false;
-  public currentRoute: string;
 
-  constructor(
-    private _router: Router,
-    private renderer: Renderer2,
-    public _piaService: PiaService,
-    private _http: HttpClient,
-    public _languagesService: LanguagesService,
-    private authService: AuthenticationService,
-    protected session: ProfileSession
-  ) {
+  constructor(private _router: Router,
+              private renderer: Renderer2,
+              private _translateService: TranslateService,
+              public _piaService: PiaService,
+              private _modalsService: ModalsService,
+              private _http: HttpClient,
+              public _languagesService: LanguagesService,
+              private authService: AuthenticationService) {
     this.updateContrast();
   }
 
@@ -42,29 +41,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.appVersion = environment.version;
 
     // Set the visibility for the PIA example button according to the current url
-    this.headerForHome = (
-      this._router.url === '/home' ||
-      this._router.url === '/about' ||
-      this._router.url === '/help' ||
-      this._router.url === '/settings'
-    ) ? true : false;
-
-    this.currentRoute = this._router.url;
+    this.headerForHome = (this._router.url === '/home' ||
+                          this._router.url === '/about' ||
+                          this._router.url === '/help' ||
+                          this._router.url === '/settings') ? true : false;
 
     this.profileSubscription = this.authService.profileSubject.subscribe(profile => {
       this.profile = profile;
     });
-
-    this._hasPortfolio = this.session.hasPortfolioStructures();
-    this._hasOwnStructure = this.session.hasOwnStructure();
-  }
-
-  hasPortfolio() {
-    return this._hasPortfolio;
-  }
-
-  hasOwnStructure() {
-    return this._hasOwnStructure;
   }
 
   ngOnDestroy() {
