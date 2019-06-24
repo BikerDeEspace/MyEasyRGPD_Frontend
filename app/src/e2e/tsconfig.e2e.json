@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/e2e",
+    "module": "commonjs",
+    "target": "es5",
+    "paths": {
+        "@api/*": ["api/*"],
+        "@security/*": ["security/*"],
+        "@utils/*": ["utils/*"]
+    },
+    "types": [
+      "jasmine",
+      "node"
+    ]
+  }
+}
