@@ -1,0 +1,46 @@
+<app-header></app-header>
+
+<h1>{{ 'templates.header' | translate }}</h1>
+<div class="templates container pia-mainContainerBlock">
+	<div class="row">
+		<div class="small-12 medium-12 columns">
+			<div *ngFor="let template of templates" class="template pia-cardsBlock">
+		  	<p class="template-name">{{ template.name }}</p>
+		  	<p class="template-description">{{ template.description }}</p>
+		  	<div class="pia-cardsBlock-item-btn">
+	        <button class="pick-template btn btn-green get-focus" (click)="processingFromTemplate(template)">
+	        	{{ 'templates.pick'| translate }}
+	        </button>
+	      </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="pia-modalBlock" id="modal-list-new-processing">
+  <div class="pia-modalBlock-content bounceIn">
+      <button tabindex="1" type="button" class="pia-modalBlock-close btn" title="{{ 'homepage.cards.title_close_creation' | translate }}"
+          (click)="_modalsService.closeModal()">
+          <span class="pia-icons pia-icon-close"></span>
+      </button>
+      <form class="pia-cardsBlock-item-form" (ngSubmit)="onSubmitProcessing()" [formGroup]="processingForm">
+          
+          <div>
+              <label for="author">{{ 'homepage.cards.author' | translate }}</label>
+              <input formControlName="author" type="text" placeholder="{{ 'homepage.cards.placeholder_author' | translate }}" id="author"
+                  required>
+          </div>
+          <div>
+              <label for="designated_controller">{{ 'homepage.cards.designated_controller' | translate }}</label>
+              <input formControlName="designated_controller" type="text" placeholder="{{ 'homepage.cards.placeholder_designated_controller' | translate }}"
+                  id="designated_controller" required>
+          </div>
+          <p>&nbsp;</p>
+         
+          <div class="pia-cardsBlock-item-btn">
+              <button type="submit" [disabled]="processingForm.invalid" class="btn btn-green get-focus" id="processing-save-card-btn">{{ 'homepage.cards.start' | translate }}</button>
+          </div>
+      </form>
+  </div>
+</div>
+
