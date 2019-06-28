@@ -1,0 +1,9 @@
+[template]
+src = "environment.ts.tmpl"
+dest = "src/environments/environment.ts"
+keys = [
+       "/git/branch",
+       "/api/client/id",
+       "/api/client/secret",
+       "/api/host/url",
+]
