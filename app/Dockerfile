@@ -33,7 +33,7 @@ COPY environment/environment.prod.ts /usr/share/pialab/src/environments/environm
 RUN sed -i 's,CLIENTID,'${CLIENTID}',g' /usr/share/pialab/src/environments/environment.prod.ts
 RUN sed -i 's,CLIENTSECRET,'${CLIENTSECRET}',g' /usr/share/pialab/src/environments/environment.prod.ts
 RUN sed -i 's,BACKENDURL,'${BACKENDURL}',g' /usr/share/pialab/src/environments/environment.prod.ts
-
+RUN cp /usr/share/pialab/src/environments/environment.prod.ts /usr/share/pialab/src/environments/environment.ts
 # NPM INSTALL
 RUN npm install
 # BUILD APP FOR PRODUCTION
