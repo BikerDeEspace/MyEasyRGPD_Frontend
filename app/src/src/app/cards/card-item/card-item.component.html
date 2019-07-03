@@ -1,3 +1,5 @@
+<!-- PROCESSING ITEM -->
+
 <div class="pia-cardsBlock pia" [ngClass]="{'pia-archiveBlock': processing.status == 1}" [attr.data-id]="processing.id" [attr.data-name]="processing.name">
     <div class="pia-cardsBlock-header-title" *ngIf="processing.id !== null">
       <span *ngIf="!previousProcessing || previousProcessing.status !== processing.status">{{ ('processing.statuses.' + processing.status) | translate }}</span>
@@ -9,22 +11,23 @@
           <div class="pia-cardsBlock-toolbar-more">
             <a href="javascript:;" class="btn pia-tooltip pia-dropdown-icon" title="{{ 'homepage.cards.item.tools.more_options' | translate }}">
               <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+              <!-- Processing actions -->
               <ul class="pia-cardsBlock-toolbar-moreList">
-                <li *ngxPermissionsOnly="['CanCreateProcessing']">
-                  <i class="fa fa-files-o" aria-hidden="true"></i>
-                  <a href="javascript:;" (click)="duplicateProcessing()">{{ 'homepage.cards.item.tools.duplicate' | translate }}</a>
-                </li>
-                <li>
+                <li *ngxPermissionsOnly="['CanShowPIA']">
                   <i class="fa fa-file-text-o" aria-hidden="true"></i>
                   <a routerLink="/processing/{{processing.id}}/pias" [innerHTML]="'homepage.cards.item.tools.show_pias' | translate"></a>
                 </li>
-                <li *ngxPermissionsOnly="['CanDeleteProcessing']">
-                  <i class="fa fa-trash-o" aria-hidden="true"></i>
-                  <a href="javascript:;" (click)="removeProcessing(processing.id)" class="delete-processing">{{ 'homepage.cards.item.tools.remove' | translate }}</a>
+                <li *ngxPermissionsOnly="['CanDuplicateProcessing']">
+                  <i class="fa fa-files-o" aria-hidden="true"></i>
+                  <a href="javascript:;" (click)="duplicateProcessing()">{{ 'homepage.cards.item.tools.duplicate' | translate }}</a>
                 </li>
                 <li *ngxPermissionsOnly="['CanExportProcessing']">
                   <i class="fa fa-download" aria-hidden="true"></i>
                   <a href="javascript:;" (click)="exportProcessing(processing.id)" class="btn pia-tooltip">{{ 'homepage.cards.item.tools.export' | translate }}</a>
+                </li>
+                <li *ngxPermissionsOnly="['CanDeleteProcessing']">
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  <a href="javascript:;" (click)="removeProcessing(processing.id)" class="delete-processing">{{ 'homepage.cards.item.tools.remove' | translate }}</a>
                 </li>
               </ul>
             </a>
