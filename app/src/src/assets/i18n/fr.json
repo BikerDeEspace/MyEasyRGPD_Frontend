@@ -102,6 +102,7 @@
       "new_from_template": "Traitement depuis un modèle",
       "new_folder": "Dossier",
       "import_pia": "Importer PIA",
+      "import_processing": "Importer Traitement",
       "list_rocket_content": "Lancez-vous ! Pour commencer<br>un PIA, cliquez sur le +",
       "card_rocket_content": "Lancez-vous !<br><br>Pour commencer<br>un PIA, cliquez<br> sur le +",
       "go_to_folders": "Retour aux dossiers"
@@ -325,6 +326,7 @@
       "pia_section": {
         "title": "PIAs",
         "new_pia_button": "Créer un PIA",
+        "import_pia_button": "Importer PIA",
         "list_button": "Voir la liste des PIAs"
       }
     },

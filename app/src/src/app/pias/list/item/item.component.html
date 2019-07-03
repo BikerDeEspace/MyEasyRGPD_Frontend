@@ -50,32 +50,35 @@
 </td>
 <td>
   <div class="pia-toolbar">
-    <div class="pia-cardsBlock-toolbar-export" *ngxPermissionsOnly="['CanExportPIA']">
-      <a href="javascript:;" (click)="_piaService.export(pia.id)" class="btn pia-tooltip">
-        <i class="fa fa-download" aria-hidden="true"></i>
-        <span class="pia-tooltip-text">{{ 'processing.pia-list.item.actions.export' | translate }}</span>
-      </a>
-    </div>
     <div class="pia-toolbar-more">
       <a href="javascript:;" class="btn pia-tooltip pia-dropdown-icon" title="{{ 'processing.pia-list.item.actions.tooltip' | translate }}">
         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
         <ul class="pia-toolbar-moreList">
-          <li *ngxPermissionsOnly="['CanEditPIA']">
-            <i class="fa fa-files-o" aria-hidden="true"></i>
-            <a routerLink="/entry/{{pia.id}}/section/3/item/1" [innerHTML]="'processing.pia-list.item.actions.edit' | translate"></a>
-          </li>
-          <li *ngxPermissionsOnly="['CanExportPIA']">
-            <i class="fa fa-files-o" aria-hidden="true"></i>
-            <a href="javascript:;" (click)="_piaService.duplicate(pia.id)">{{ 'processing.pia-list.item.actions.duplicate' | translate }}</a>
+          <!-- SHOW PIA -->
+          <li>
+            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+            <a routerLink="/summary/{{pia.id}}" [innerHTML]="'processing.pia-list.item.actions.show' | translate"></a>
           </li>
           <li>
             <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
             <a routerLink="/summary/{{pia.id}}" [queryParams]="{ displayOnlyActionPlan: true }" [innerHTML]="'processing.pia-list.item.actions.action_plan' | translate"></a>
           </li>
-          <li>
-            <i class="fa fa-file-text-o" aria-hidden="true"></i>
-            <a routerLink="/summary/{{pia.id}}" [innerHTML]="'processing.pia-list.item.actions.show' | translate"></a>
+
+          <!-- ACTIONS (EDIT / DUPLICATE / EXPORT) -->
+          <li *ngxPermissionsOnly="['CanEditPIA']">
+            <i class="fa fa-files-o" aria-hidden="true"></i>
+            <a routerLink="/entry/{{pia.id}}/section/3/item/1" [innerHTML]="'processing.pia-list.item.actions.edit' | translate"></a>
           </li>
+          <li *ngxPermissionsOnly="['CanDuplicatePIA']">
+            <i class="fa fa-files-o" aria-hidden="true"></i>
+            <a href="javascript:;" (click)="_piaService.duplicate(pia.id)">{{ 'processing.pia-list.item.actions.duplicate' | translate }}</a>
+          </li>
+          <li *ngxPermissionsOnly="['CanExportPIA']">
+            <i class="fa fa-download" aria-hidden="true"></i>
+            <a href="javascript:;" (click)="_piaService.export(pia.id)">{{ 'processing.pia-list.item.actions.export' | translate }}</a>
+          </li>
+
+          <!-- REMOVE -->
           <li *ngxPermissionsOnly="['CanDeletePIA']">
             <i class="fa fa-trash-o" aria-hidden="true"></i>
             <a href="javascript:;" (click)="removePia(pia.id)">{{ 'processing.pia-list.item.actions.remove' | translate }}</a>

@@ -11,7 +11,7 @@ export const environment = {
   api: {
     client_id:     '5d3s6viwh4co0s4c4oowckowwkgs0k0c8googwcks8g8co00s',
     client_secret: '1kh6juzgmls04gkoowk8gsko4848ooosk4o8kk4ow8g40g84os',
-    host:          'http://localhost:8001',
+    host:          'http://localhost:8000',
     token_path:    '/oauth/v2/token'
   }
 };

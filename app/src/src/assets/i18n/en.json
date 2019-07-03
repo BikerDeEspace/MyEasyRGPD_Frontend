@@ -354,6 +354,7 @@
       "pia_section": {
         "title": "PIAs",
         "new_pia_button": "Create new PIA",
+        "import_pia_button": "Import PIA",
         "list_button": "List of PIAs"
       }
     },

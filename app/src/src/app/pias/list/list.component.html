@@ -63,6 +63,12 @@
           </div>
         </div>
 
+        <div class="pia-filtersBlock-buttons" *ngxPermissionsOnly="['CanImportPIA']">
+          <button type="button" (click)="importPia()" class="btn btn-green">
+            <i class="fa fa-upload" aria-hidden="true"></i>{{ 'homepage.filters.import_pia' | translate }}
+          </button>
+        </div>
+
       </div>
 
       <table class="stack hover">
