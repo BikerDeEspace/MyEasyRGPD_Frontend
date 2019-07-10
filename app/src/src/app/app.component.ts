@@ -59,6 +59,7 @@ export class AppComponent {
 
     const roles = {};
 
+    /*
     roles['ROLE_USER'] = [];
 
     roles['ROLE_CONTROLLER'] = [
@@ -80,6 +81,62 @@ export class AppComponent {
     roles['ROLE_SUPER_ADMIN'] = [].concat(roles['ROLE_TECHNICAL_ADMIN']).concat([
       'CanImportPIA', 'CanExportPIA', 'CanExportProcessing'
     ]);
+    */
+   
+    //INVITE
+    roles['ROLE_USER'] = [
+      'CanShowProcessing',
+      'CanShowPIA'
+    ];
+    
+    //CONTROLLER
+    roles['ROLE_CONTROLLER'] = roles['ROLE_USER'].concat([
+      'CanCreateFolder',
+      'CanDeleteFolder',
+      
+      'CanCreateProcessing',
+      'CanEditProcessing',
+      'CanDuplicateProcessing',
+      'CanExportProcessing',
+      
+      'CanCreatePIA',
+      'CanCreatePIAExample',
+      'CanEditPIA', 
+      'CanDuplicatePIA',
+      'CanExportPIA', 
+      
+      'CanCancelEvaluatePIA', 
+      'CanAskEvaluatePIA',
+      
+      'AccessToContextSection', 
+      'AccessToPrinciplesSection', 
+      'AccessToRisksSection'
+    ]);
+    
+    //DPO
+    roles['ROLE_DPO'] = roles['ROLE_CONTROLLER'].concat([
+      'CanEvaluatePIA', 
+      'CanValidatePIA', 
+      'CanCancelValidatePIA',
+      
+      'AccessToValidationSection'
+    ]);
+    roles['ROLE_SHARED_DPO'] = roles['ROLE_DPO'].concat([]);
+    
+    //ADMINS
+    roles['ROLE_ADMIN'] = roles['ROLE_SHARED_DPO'].concat([
+      'CanDeleteProcessing',
+      'CanDeletePIA',
+      
+      'CanImportProcessing',
+      'CanImportPIA'
+    ]);
+    
+    roles['ROLE_TECHNICAL_ADMIN'] = roles['ROLE_ADMIN'].concat([
+      'CanEditStructure'
+    ]);
+    roles['ROLE_SUPER_ADMIN'] = roles['ROLE_TECHNICAL_ADMIN'].concat([]);
+
 
     this.permissionsService.loadRolesAndPermissions(roles);
 /*
